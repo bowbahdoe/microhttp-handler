@@ -16,7 +16,7 @@
     </properties>
 
     <name>microhttp-handler</name>
-    <description>\</description>
+    <description>Interfaces for composable handling of requests in microhttp.</description>
     <url>https://github.com/bowbahdoe/microhttp-handler</url>
 
     <developers>
