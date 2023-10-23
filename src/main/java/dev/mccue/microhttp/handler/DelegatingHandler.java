@@ -9,7 +9,7 @@ import java.util.Objects;
  * Template for a class which has a list of handlers that it tries
  * in order.
  */
-public abstract class DelegatingHandler implements Handler {
+public class DelegatingHandler implements Handler {
 
     private final List<Handler> handlers;
     private final IntoResponse notHandled;
