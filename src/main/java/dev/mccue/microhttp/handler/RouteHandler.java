@@ -26,6 +26,41 @@ public abstract class RouteHandler implements Handler {
             Request request
     ) throws Exception;
 
+    public static RouteHandler of(String method, Pattern pattern, Handler handler) {
+        return new RouteHandler(method, pattern) {
+            @Override
+            protected @Nullable IntoResponse handleRoute(
+                    Matcher routeMatch,
+                    Request request
+            ) throws Exception {
+                return handler.handle(request);
+            }
+        };
+    }
+
+    public interface MatcherHandler {
+        @Nullable IntoResponse handleRoute(
+                Matcher routeMatch,
+                Request request
+        ) throws Exception;
+    }
+
+    public static RouteHandler of(
+            String method,
+            Pattern pattern,
+            MatcherHandler handler
+    ) {
+        return new RouteHandler(method, pattern) {
+            @Override
+            protected @Nullable IntoResponse handleRoute(
+                    Matcher routeMatch,
+                    Request request
+            ) throws Exception {
+                return handler.handleRoute(routeMatch, request);
+            }
+        };
+    }
+
     @Override
     public final @Nullable IntoResponse handle(Request request) throws Exception {
         if (!method.equalsIgnoreCase(request.method())) {
