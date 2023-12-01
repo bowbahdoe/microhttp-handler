@@ -68,16 +68,19 @@ public abstract class RouteHandler implements Handler {
             return null;
         }
 
+        URI uri;
         try {
-            var matcher = pattern.matcher(new URI(request.uri()).getPath());
-
-            if (!matcher.matches()) {
-                return null;
-            }
-
-            return handleRoute(matcher, request);
+            uri = new URI(request.uri());
         } catch (URISyntaxException e) {
             return null;
         }
+
+        var matcher = pattern.matcher(uri.getPath());
+
+        if (!matcher.matches()) {
+            return null;
+        }
+
+        return handleRoute(matcher, request);
     }
 }
