@@ -4,6 +4,7 @@ import org.jspecify.annotations.Nullable;
 import org.microhttp.Request;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,12 +68,16 @@ public abstract class RouteHandler implements Handler {
             return null;
         }
 
-        var matcher = pattern.matcher(new URI(request.uri()).getPath());
+        try {
+            var matcher = pattern.matcher(new URI(request.uri()).getPath());
 
-        if (!matcher.matches()) {
+            if (!matcher.matches()) {
+                return null;
+            }
+
+            return handleRoute(matcher, request);
+        } catch (URISyntaxException e) {
             return null;
         }
-
-        return handleRoute(matcher, request);
     }
 }

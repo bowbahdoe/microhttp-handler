@@ -20,7 +20,7 @@ public class DelegatingHandler implements Handler {
      * @param notHandled The {@link IntoResponse} to use if no handler matches the request.
      */
     public DelegatingHandler(
-            List<Handler> handlers,
+            List<? extends Handler> handlers,
             IntoResponse notHandled
     ) {
         this.handlers = List.copyOf(handlers);
