@@ -10,7 +10,7 @@ Interfaces for composable handling of requests in microhttp.
 <dependency>
     <groupId>dev.mccue</groupId>
     <artiactId>microhttp-handler</artiactId>
-    <version>0.0.4</version>
+    <version>0.0.6</version>
 </dependency>
 ```
 
@@ -18,7 +18,7 @@ Interfaces for composable handling of requests in microhttp.
 
 ```groovy
 dependencies {
-    implementation('dev.mccue:microhttp-handler:0.0.4')
+    implementation('dev.mccue:microhttp-handler:0.0.6')
 }
 ```
 
