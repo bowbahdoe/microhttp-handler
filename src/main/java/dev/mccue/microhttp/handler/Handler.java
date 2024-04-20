@@ -1,6 +1,5 @@
 package dev.mccue.microhttp.handler;
 
-import org.jspecify.annotations.Nullable;
 import org.microhttp.Request;
 
 /**
@@ -18,5 +17,5 @@ public interface Handler {
      * @return Something which can be converted into a response or null.
      * @throws Exception If something goes wrong.
      */
-    @Nullable IntoResponse handle(Request request) throws Exception;
+    IntoResponse handle(Request request) throws Exception;
 }

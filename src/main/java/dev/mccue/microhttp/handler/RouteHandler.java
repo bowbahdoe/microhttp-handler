@@ -1,11 +1,11 @@
 package dev.mccue.microhttp.handler;
 
-import org.jspecify.annotations.Nullable;
 import org.microhttp.Request;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,15 +22,32 @@ public abstract class RouteHandler implements Handler {
         this.pattern = Objects.requireNonNull(pattern);
     }
 
-    protected abstract @Nullable IntoResponse handleRoute(
+    protected abstract IntoResponse handleRoute(
             Matcher routeMatch,
             Request request
     ) throws Exception;
 
+    public static RouteHandler of(
+            String method,
+            Pattern pattern,
+            Callable<? extends IntoResponse> handler
+    ) {
+        return new RouteHandler(method, pattern) {
+            @Override
+            protected IntoResponse handleRoute(
+                    Matcher routeMatch,
+                    Request request
+            ) throws Exception {
+                return handler.call();
+            }
+        };
+    }
+
+
     public static RouteHandler of(String method, Pattern pattern, Handler handler) {
         return new RouteHandler(method, pattern) {
             @Override
-            protected @Nullable IntoResponse handleRoute(
+            protected IntoResponse handleRoute(
                     Matcher routeMatch,
                     Request request
             ) throws Exception {
@@ -40,7 +57,7 @@ public abstract class RouteHandler implements Handler {
     }
 
     public interface MatcherHandler {
-        @Nullable IntoResponse handleRoute(
+        IntoResponse handleRoute(
                 Matcher routeMatch,
                 Request request
         ) throws Exception;
@@ -53,7 +70,7 @@ public abstract class RouteHandler implements Handler {
     ) {
         return new RouteHandler(method, pattern) {
             @Override
-            protected @Nullable IntoResponse handleRoute(
+            protected IntoResponse handleRoute(
                     Matcher routeMatch,
                     Request request
             ) throws Exception {
@@ -63,7 +80,7 @@ public abstract class RouteHandler implements Handler {
     }
 
     @Override
-    public final @Nullable IntoResponse handle(Request request) throws Exception {
+    public final IntoResponse handle(Request request) throws Exception {
         if (!method.equalsIgnoreCase(request.method())) {
             return null;
         }

@@ -6,7 +6,7 @@
 
     <groupId>dev.mccue</groupId>
     <artifactId>microhttp-handler</artifactId>
-    <version>0.0.6</version>
+    <version>2024.04.20</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -43,14 +43,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jspecify</groupId>
-            <artifactId>jspecify</artifactId>
-            <version>0.3.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.microhttp</groupId>
             <artifactId>microhttp</artifactId>
-            <version>0.10</version>
+            <version>0.11</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -112,9 +107,13 @@
                     <plugin>
                         <groupId>org.jreleaser</groupId>
                         <artifactId>jreleaser-maven-plugin</artifactId>
-                        <version>1.3.1</version>
+                        <version>1.11.0</version>
                         <configuration>
                             <jreleaser>
+                                <project>
+                                    <copyright>2024</copyright>
+                                    <versionPattern><type>CHRONVER</type></versionPattern>
+                                </project>
                                 <signing>
                                     <active>ALWAYS</active>
                                     <armored>true</armored>
